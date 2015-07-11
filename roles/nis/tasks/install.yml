@@ -6,22 +6,24 @@
      - ypbind-install
 
 - name: copy sysconfig network
-  template: src=network.j2 dest=/etc/sysconfig/network owner=root group=root mode="u=rw,g=r,o=r"
+  template: src=network.j2 dest=/etc/sysconfig/network owner=root group=root mode=0644
   tags:
      - ypbind-config
 
 - name: copy yp conf
-  template: src=yp.conf.j2 dest=/etc/yp.conf owner=root group=root mode="u=rw,g=r,o=r"
- tags:
+  template: src=yp.conf.j2 dest=/etc/yp.conf owner=root group=root mode=0644
+  tags:
      - ypbind-config
 
 - name: copy nsswitch file
-  template: src=nsswitch.j2 dest=/etc/nsswitch owner=root group=root mode="u=rw,g=r,o=r"
- tags:
+  template: src=nsswitch.j2 dest=/etc/nsswitch owner=root group=root mode=0644
+  tags:
      - ypbind-config
 
 - name: enable ypbind
-  service: name=ypbind state=start enabled=on
- tags:
+  service: name=ypbind state=started enabled=on
+  notify:
+     - restart rpcbind
+  tags:
      - ypbind-start
 

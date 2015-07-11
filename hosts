@@ -3,6 +3,13 @@
 # Inventory for the CHPC
 #
 ######################################################
+[grid-admin]
+grid-ce.chpc.ac.za
+grid-vobox.chpc.ac.za
+grid-xrootd
+grid-xrootd01
+grid-xrootd02
+
 [worker-nodes]
 gnode-1-1.chpc.ac.za
 gnode-1-2.chpc.ac.za

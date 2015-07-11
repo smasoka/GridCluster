@@ -1,2 +1,10 @@
 ---
 # handlers file for nis
+- name: restart nfs
+  service: name=nfs state=restarted
+
+- name: restart nfslock
+  service: name=nfslock state=restarted
+
+- name: restart rpcbind
+  service: name=rpcbind state=restarted
