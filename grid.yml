@@ -1,0 +1,5 @@
+---
+- hosts: sagrid
+  user: root
+  roles:
+    - nis
