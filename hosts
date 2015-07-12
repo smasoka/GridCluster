@@ -3,6 +3,9 @@
 # Inventory for the CHPC
 #
 ######################################################
+[test]
+grid-ce.chpc.ac.za
+
 [grid-admin]
 grid-ce.chpc.ac.za
 grid-vobox.chpc.ac.za

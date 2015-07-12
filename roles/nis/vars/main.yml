@@ -1,2 +1,11 @@
 ---
 # vars file for nis
+nfs_mount: /export/home
+
+nfs_server: ldap01.localdomain
+
+nfs_path: /export/home
+
+fs_type: nfs
+
+nfs_opts: defaults

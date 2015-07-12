@@ -1,5 +1,5 @@
 ---
-- hosts: grid-admin
+- hosts: test
   user: root
   roles:
     - nis

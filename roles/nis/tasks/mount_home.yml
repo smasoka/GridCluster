@@ -1,0 +1,25 @@
+---
+- name: create home directory
+  file: path={{ nfs_mount }} state=directory owner=root group=root recurse=yes
+  tags:
+     - nfs-dir
+
+- name: ensure rpcbind is running
+  service: name=rpcbind state=started enabled=yes
+  tags:
+     - rpcbind
+
+- name: ensure {{ nfs_mount }} directory exists
+  file: path={{ nfs_mount }} state=directory
+  tags:
+     - nfs-dir
+
+- name: ensure nfs is running
+  service: name=nfs state=started
+  tags:
+    - nfs-service
+
+- name: configure /etc/fstab on clients
+  mount: name={{ nfs_mount }} src={{ nfs_server }}:{{ nfs_path }} fstype={{ fs_type }} opts={{ nfs_opts }} state=mounted
+  tags:
+     - fstab-mount
