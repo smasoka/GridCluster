@@ -1,5 +1,11 @@
 ---
 # handlers file for nis
+- name: restart rpcidmapd 
+  service: name=rpcidmapd state=restarted
+
+- name: restart ypbind
+  service: name=ypbind state=restarted
+
 - name: restart nfs
   service: name=nfs state=restarted
 

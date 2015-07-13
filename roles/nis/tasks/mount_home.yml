@@ -14,10 +14,20 @@
   tags:
      - nfs-dir
 
-- name: ensure nfs is running
-  service: name=nfs state=started
+- name: copy idmapd.conf file
+  template: src=idmapd.conf.j2 dest=/etc/idmapd.conf owner=root group=root mode=0644
+  notify:
+     - restart rpcidmapd
+     - restart ypbind
+     - restart nfs
+     - restart nfslock
   tags:
-    - nfs-service
+     - nfs-services
+
+- name: clear keyring of all keys
+  command: /usr/sbin/nfsidmap -c
+  tags:
+     - nfs-services
 
 - name: configure /etc/fstab on clients
   mount: name={{ nfs_mount }} src={{ nfs_server }}:{{ nfs_path }} fstype={{ fs_type }} opts={{ nfs_opts }} state=mounted

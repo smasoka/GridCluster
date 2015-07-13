@@ -4,7 +4,8 @@
 #
 ######################################################
 [test]
-grid-ce.chpc.ac.za
+grid-xrootd01
+grid-xrootd02
 
 [grid-admin]
 grid-ce.chpc.ac.za
