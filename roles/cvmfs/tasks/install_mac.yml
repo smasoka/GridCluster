@@ -1,0 +1,61 @@
+---
+- name: download the package
+  sudo: True
+  sudo_user: root
+  get_url: url=https://ecsft.cern.ch/dist/cvmfs/cvmfs-2.1.20/cvmfs-2.1.20.pkg dest=/tmp/cvmfs-2.1.20.pkg
+  tags:
+    - cvmfs
+
+- name: download osxFuse
+  sudo: true
+  sudo_user: smasoka
+  get_url: url=http://sourceforge.net/projects/osxfuse/files/osxfuse-2.7.5/osxfuse-2.7.5.dmg dest=/tmp/osxfuse-2.7.5.dmg
+  tags:
+    - osxfuse
+
+- name: mount OSXFUSE
+  sudo: true
+  sudo_user: root
+  command: hdiutil attach /tmp/osxfuse-2.7.5.dmg
+  tags:
+    - osxfuse
+    - mount
+
+- name: install OSXFUSE
+  sudo: true
+  sudo_user: root
+  shell: installer -pkg "/Volumes/Fuse for OS X/Install OSXFUSE 2.7.pkg" -target /
+  tags:
+    - osxfuse
+    - install
+ 
+- name: Install CVMFS client
+  sudo: true
+  sudo_user: root
+  shell: installer -pkg /tmp/cvmfs-2.1.20.pkg -target /
+  tags:
+    - cvmfs
+    - install
+
+- name: copy over the local config files
+  sudo: true
+  copy: src=etc/cvmfs/{{ item }} dest=/etc/cvmfs/{{ item }}
+  with_items:
+    - default.local
+    - keys/apprepo.sagrid.ac.za.pub
+    - config.d/apprepo.sagrid.ac.za.conf
+    - keys/devrepo.sagrid.ac.za.pub
+    - config.d/devrepo.sagrid.ac.za.conf
+  tags:
+    - config
+
+- name: ensure that autofs is running
+  sudo: true
+  service: name=autofs state=started
+
+- name: check that the repo is mounted
+  stat: path=/cvmfs/devrepo.sagrid.ac.za
+  register: p
+
+- debug: msg="Path exists and is a directory"
+  when: p.stat.isdir is defined and p.stat.isdir

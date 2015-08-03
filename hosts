@@ -4,8 +4,7 @@
 #
 ######################################################
 [test]
-grid-xrootd01
-grid-xrootd02
+Masonic-Pro.dhcp.meraka.csir.co.za
 
 [grid-admin]
 grid-ce.chpc.ac.za

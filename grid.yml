@@ -1,5 +1,5 @@
 ---
-- hosts: worker-nodes
+- hosts: test
   user: root
   roles:
-    - nis
+    - cvmfs
