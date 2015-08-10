@@ -1,2 +1,3 @@
 ---
-- include: install_mac.yml
+- include: install_linux.yml
+#- include: install_mac.yml
